@@ -20,7 +20,7 @@ const loginSchema = Joi.object({
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
         email: req.body.email
-    })
+    }).select('+password')
     if (!user) {
         res.status(400).send("email doesn't exist");
         return;
@@ -37,8 +37,19 @@ router.post('/login', async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
         else {
             const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-
-            res.cookie('blogToken', token, {
+            
+            userObj = {
+                name : user.fname + ' ' + user.lname,
+                email : user.email,
+                id : user._id
+            }
+            const tokenObj = JSON.stringify({
+                token,
+                user : {
+                    ...userObj
+                }
+            })
+            res.cookie('blogToken', tokenObj, {
                 httpOnly: true,
                 path: '/',
             }).status(200).json({ message: 'success!' })
@@ -47,6 +58,13 @@ router.post('/login', async (req, res) => {
     catch (error) {
         res.status(500).send(error)
     }
+})
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('blogToken');
+    res.status(200).json({
+        "message" : 'cookie cleared'
+    })
 })
 
 router.post('/register', async (req, res) => {

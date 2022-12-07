@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser')
+const dotenv = require('dotenv').config();
 const PORT = process.env.PORT || 4000
-const dotenv = require('dotenv');
 const cors = require("cors");
 const authRoute = require('./routes/auth/index');
-const authDashboard = require('./routes/auth/authDashboard')
+const authUser = require('./routes/user/index')
 
 
 const app = express();
@@ -21,14 +21,14 @@ app.use(cors(corsOptions))
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("maa ki choot");
+    res.send("App running");
 });
 
 app.listen(PORT, () => {
     console.log(`server running at ${PORT}`);
 })
 
-dotenv.config();
+
 
 mongoose.connect(
     process.env.DB_CONNECT,
@@ -37,6 +37,6 @@ mongoose.connect(
     .then(() => console.log('db connected'))
     .catch((err) => console.log(err))
 
-app.use("/api/users", authRoute);
-app.use("/api/dashboard", authDashboard);
+app.use("/api/auth", authRoute);
+app.use("/api/users", authUser);
 

@@ -10,7 +10,7 @@ function Login() {
 
     const onSubmit = (data) => {
         console.log(data)
-        axios.post('http://localhost:4000/api/users/login',
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
             {
                 email: data.email,
                 password: data.password
@@ -20,17 +20,6 @@ function Login() {
             })
             .catch(error => console.log(error))
     }
-
-    // useEffect(() => {
-    //     if (token) {
-    //         localStorage.setItem('token', token)
-    //         router.push('/dashboard')
-    //     }
-    // }, [token])
-
-    // useEffect(() => {
-    //     setToken(localStorage.getItem('token'))
-    // }, [])
 
     return (
         <div>

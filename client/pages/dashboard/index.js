@@ -1,26 +1,25 @@
-import React from 'react'
-import cookies from 'js-cookie'
+import React, { useEffect } from 'react'
 import axios from 'axios'
+import Layout from '../../components/Layout'
 
 
-function Dashboard({token}) {
-  const getData = () => {
-    
-  } 
-  console.log(token)
+function Dashboard({ token, user }) {
+
   return (
-    <div>
-        <button>logout</button>
-        <button onClick={getData}>get data</button>
-    </div>
+    <Layout>
+
+    </Layout>
   )
 }
 
 export async function getServerSideProps(context) {
-  const token = context.req.cookies.blogToken
-  return {props : {
-     token
-  }}
+  const token = JSON.parse(context.req.cookies.blogToken)
+  return {
+    props: {
+      token: token.token,
+      user: token.user
+    }
+  }
 }
 
 export default Dashboard
