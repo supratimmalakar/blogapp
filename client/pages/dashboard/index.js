@@ -6,7 +6,7 @@ import Layout from '../../components/Layout'
 function Dashboard({ token, user }) {
 
   return (
-    <Layout>
+    <Layout token={token}>
 
     </Layout>
   )

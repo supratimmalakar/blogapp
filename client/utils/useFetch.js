@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 
-export const useAxios = (route, method, token, payload) => {
+export const useFetch = (route, method, token, payload) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState("");
     const [loaded, setLoaded] = useState(false);
