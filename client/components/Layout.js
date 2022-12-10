@@ -100,7 +100,11 @@ function Layout({ children, token }) {
                 <div className='flex row h-[90px] border-b-2 items-center justify-between'>
                     <div className='flex row gap-[30px] ml-5 items-center'>
                         <h1>Blogger</h1>
-                        <input ref={searchRef} onChange={searchOnChange} placeholder='Search users' className='w-[250px] h-[40px] px-2' />
+                        <input
+                            ref={searchRef}
+                            // onChange={searchOnChange} 
+                            placeholder='Search users'
+                            className='w-[250px] h-[40px] px-2' />
                     </div>
                     <div className='flex row gap-[20px] mr-5'>
                         <button>
