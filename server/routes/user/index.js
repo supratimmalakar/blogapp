@@ -41,6 +41,7 @@ router.post('/follow', verify, async (req, res) => {
     }
 })
 
+
 router.post('/unfollow', verify, async (req, res) => {
     const { unfollower, unfollowed } = req.body;
     try {
@@ -60,20 +61,5 @@ router.post('/unfollow', verify, async (req, res) => {
     }
 })
 
-router.get('/search', verify, async (req, res) => {
-    const {q} =  req.query
-    try {
-        const users = await User.find({
-            "email" : {
-                '$regex' : q,
-                '$options' : "i"
-            }
-        }).exec();
-        res.status(200).json(users);
-    }
-    catch (err) {
-        res.status(400).json(err)
-    }
-})
 
 module.exports = router
