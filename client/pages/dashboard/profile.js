@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import { useFetch } from '../../utils/useFetch'
@@ -10,7 +11,7 @@ function Profile({ user, token }) {
     console.log(data)
 
     return (
-        <Layout token={token}>
+        <Layout token={token} user={user}>
             <div className='flex flex-row justify-center gap-[50px]'>
                 {loaded && !error &&
                     (<>
@@ -25,7 +26,11 @@ function Profile({ user, token }) {
                             <h3 className='font-[500]'>{data.fname + ' ' + data.lname} </h3>
                             <h4 className='font-[400]'>{data.bio}</h4>
                         </div>
+                        <Link href='/dashboard/posts/new-post'>
+                            <button>Create new Post</button>
+                        </Link>
                     </>)}
+
             </div>
         </Layout>
     )

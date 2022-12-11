@@ -17,7 +17,7 @@ function UserProfile({ user, token }) {
     }, [loaded]);
 
     const unfollowUser = async () => {
-        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/unfollow`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/unfollow`, {
             unfollower: user.id,
             unfollowed: userId
         }, {
@@ -26,7 +26,7 @@ function UserProfile({ user, token }) {
             }
         })
             .then(() => {
-                axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${userId}`, {
+                axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/${userId}`, {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }
@@ -38,7 +38,7 @@ function UserProfile({ user, token }) {
     }
 
     const followUser = async () => {
-        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/follow`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/follow`, {
             follower: user.id,
             followed: userId
         }, {
@@ -47,7 +47,7 @@ function UserProfile({ user, token }) {
             }
         })
             .then(() => {
-                axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${userId}`, {
+                axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/${userId}`, {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }
@@ -58,7 +58,7 @@ function UserProfile({ user, token }) {
             .catch(err => console.log(err))
     }
     return (
-        <Layout token={token}>
+        <Layout token={token} user={user}>
             <div className='flex flex-row justify-center gap-[50px]'>
                 {loaded && !error &&
                     (<>

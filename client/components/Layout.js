@@ -5,7 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { useFetch } from '../utils/useFetch'
 
-function Layout({ children, token }) {
+function Layout({ children, token, user }) {
     const profileBtnRef = useRef()
     const searchRef = useRef()
     const [results, setResults] = useState([])
@@ -21,6 +21,8 @@ function Layout({ children, token }) {
     })
 
     const [search, setSearch] = useState("");
+
+
 
     useEffect(() => {
         setOffset({
@@ -38,29 +40,28 @@ function Layout({ children, token }) {
             withCredentials: true
         })
             .then(res => {
-                console.log(res)
                 location.reload()
             })
     }
 
-    // const searchOnChange = async (e) => {
-    //     setSearch(e.target.value);
-    //     if (e.target.value.length > 0) {
-    //         await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/search?` +
-    //             new URLSearchParams({
-    //                 q: e.target.value
-    //             }).toString()
-    //             , {
-    //                 headers: {
-    //                     Authorization: 'Bearer ' + token
-    //                 }
-    //             })
-    //             .then(res => {
-    //                 console.log(res.data)
-    //             })
-    //             .catch(err => console.log(err))
-    //     }
-    // }
+    const searchOnChange = async (e) => {
+        setSearch(e.target.value);
+        if (e.target.value.length > 0) {
+            await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/q?` +
+                new URLSearchParams({
+                    item: e.target.value
+                }).toString()
+                , {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
+                .then(res => {
+                    setResults([...res.data]);
+                })
+                .catch(err => console.log(err))
+        }
+    }
 
     useEffect(() => {
         if (search.length > 0) setShowSearch(true)
@@ -70,12 +71,25 @@ function Layout({ children, token }) {
     const SearchResultsMenu = () => {
         return (
             <div
-                className={`absolute ${!showSearch && `hidden`} w-[250px] h-[100px]`}
+                className={`absolute ${!showSearch && `hidden`} w-[300px] bg-white border-2`}
                 style={{
                     top: searchOffset.top + 40,
                     left: searchOffset.left
                 }}>
-                <h1>Search Results</h1>
+                {results.length > 0 &&
+                    results.map((result, idx) => {
+                        return (
+                            <div key={idx} className='flex flex-row justify-between'>
+                                <div className='flex flex-col'>
+                                    <h2>{result.fname}</h2>
+                                    <h4 className='text-[11px]'>{result.email}</h4>
+                                </div>
+                                <Link href={`/dashboard/users/${result._id}`}>
+                                    <button>Visit Profile</button>
+                                </Link>
+                            </div>
+                        )
+                    })}
             </div>
         )
     }
@@ -102,9 +116,9 @@ function Layout({ children, token }) {
                         <h1>Blogger</h1>
                         <input
                             ref={searchRef}
-                            // onChange={searchOnChange} 
+                            onChange={searchOnChange}
                             placeholder='Search users'
-                            className='w-[250px] h-[40px] px-2' />
+                            className='w-[300px] h-[40px] px-2' />
                     </div>
                     <div className='flex row gap-[20px] mr-5'>
                         <button>
@@ -115,7 +129,7 @@ function Layout({ children, token }) {
                         </button>
                     </div>
                 </div>
-                <div className='w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[550px]'>
+                <div className='w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[600px] overflow-y-auto'>
                     {children}
                 </div>
             </div>

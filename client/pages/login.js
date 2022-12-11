@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import {useRouter} from 'next/router'
 
 function Login() {
-    const [token, setToken] = useState(null);
     const { register, handleSubmit } = useForm();
-    const router = useRouter();
 
     const onSubmit = (data) => {
         console.log(data)

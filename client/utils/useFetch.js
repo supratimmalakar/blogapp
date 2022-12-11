@@ -12,7 +12,7 @@ export const useFetch = (route, method, token, payload) => {
         if (method === "post") {
             (async () => {
                 try {
-                    const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${route}`, payload ,{
+                    const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user${route}`, payload ,{
                         headers: {
                             Authorization: 'Bearer ' + token
                         }
@@ -30,7 +30,7 @@ export const useFetch = (route, method, token, payload) => {
 
             (async () => {
                 try {
-                    const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${route}`, {
+                    const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user${route}`, {
                         headers: {
                             Authorization: 'Bearer ' + token
                         }
