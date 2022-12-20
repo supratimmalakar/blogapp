@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react'
 import Layout from '../../../../components/Layout'
 import { useRouter } from 'next/router'
 import { useFetch } from '../../../../utils/useFetch'
-import axios from 'axios';
+import axios from 'axios'
+import PostBox from '../../../../components/PostBox'
 
 function UserProfile({ user, token }) {
     const router = useRouter();
     const [userFollowers, setUserFollowers] = useState([])
     const { userId } = router.query;
-    const { data, error, loaded } = useFetch(`/${userId}`, "get", token)
+    const { data, error, loaded } = useFetch(`/user/${userId}`, "get", token);
+    const { data: posts, error: postsError, loaded: postsLoaded } = useFetch(`/posts/${userId}`, "get", token);
+
+    useEffect(() => {
+        if (user.id === userId)
+            router.push('/dashboard/profile')
+    }, [])
+
     useEffect(() => {
         if (loaded) {
             setUserFollowers([...data.followers])
-            console.log(userFollowers.indexOf(user.id))
         }
     }, [loaded]);
 
@@ -58,8 +65,8 @@ function UserProfile({ user, token }) {
             .catch(err => console.log(err))
     }
     return (
-        <Layout token={token} user={user}>
-            <div className='flex flex-row justify-center gap-[50px]'>
+        <Layout token={token} user={user} className='p-[20px]'>
+            <div className='flex flex-row justify-start gap-[50px]'>
                 {loaded && !error &&
                     (<>
                         <div className='bg-[rgba(0,0,0,0.4)] w-[120px] h-[120px] rounded-full flex justify-center items-center'>
@@ -79,6 +86,14 @@ function UserProfile({ user, token }) {
                             }
                         </div>
                     </>)}
+            </div>
+            <div className='flex flex-col gap-[20px] mt-[30px]'>
+                <h1>Posts</h1>
+                {postsLoaded && !postsError && posts.map((post, index) => {
+                    return (
+                        <PostBox post={post} token={token} user={user} key={index} />
+                    )
+                })}
             </div>
         </Layout>
     )
