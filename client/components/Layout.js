@@ -5,7 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { useFetch } from '../utils/useFetch'
 
-function Layout({ children, token, user }) {
+function Layout({ children, token, user, className }) {
     const profileBtnRef = useRef()
     const searchRef = useRef()
     const [results, setResults] = useState([])
@@ -111,8 +111,8 @@ function Layout({ children, token, user }) {
     return (
         <>
             <div className='w-full h-[100vh]'>
-                <div className='flex row h-[90px] border-b-2 items-center justify-between'>
-                    <div className='flex row gap-[30px] ml-5 items-center'>
+                <div className='flex h-[90px] border-b-2 items-center justify-between'>
+                    <div className='flex gap-[30px] ml-5 items-center'>
                         <h1>Blogger</h1>
                         <input
                             ref={searchRef}
@@ -120,7 +120,7 @@ function Layout({ children, token, user }) {
                             placeholder='Search users'
                             className='w-[300px] h-[40px] px-2' />
                     </div>
-                    <div className='flex row gap-[20px] mr-5'>
+                    <div className='flex gap-[20px] mr-5'>
                         <button>
                             <NotificationsNoneIcon />
                         </button>
@@ -129,7 +129,7 @@ function Layout({ children, token, user }) {
                         </button>
                     </div>
                 </div>
-                <div className='w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[600px] overflow-y-auto'>
+                <div className={`w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[600px] overflow-y-auto ${className ? className : ''}`}>
                     {children}
                 </div>
             </div>
