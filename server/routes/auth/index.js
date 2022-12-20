@@ -94,7 +94,6 @@ router.post('/register', async (req, res) => {
             return;
         } else {
             const saveUser = await user.save();
-            console.log(saveUser);
             res.status(200).send("user created");
         }
     } catch (error) {
