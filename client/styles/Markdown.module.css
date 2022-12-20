@@ -1,0 +1,9 @@
+.markdown h1 {
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.markdown h3 {
+    font-size: medium;
+    font-weight: bold;
+}
