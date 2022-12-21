@@ -1,9 +1,235 @@
 .markdown h1 {
-    font-size: larger;
-    font-weight: bolder;
+  display: block;
+  font-size: 2em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.markdown h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
 }
 
 .markdown h3 {
-    font-size: medium;
-    font-weight: bold;
+  display: block;
+  font-size: 1.17em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.markdown h4 {
+  display: block;
+  margin-top: 1.33em;
+  margin-bottom: 1.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.markdown h5 {
+  display: block;
+  font-size: 0.83em;
+  margin-top: 1.67em;
+  margin-bottom: 1.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.markdown h6 {
+  display: block;
+  font-size: 0.67em;
+  margin-top: 2.33em;
+  margin-bottom: 2.33em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.markdown hr {
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  border-style: inset;
+  border-width: 1px;
+}
+
+.markdown i {
+  font-style: italic;
+}
+
+.markdown p {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.markdown a {
+  color: rgb(87, 87, 255);
+  text-decoration: underline;
+  cursor: auto;
+}
+
+.markdown li {
+  display: list-item;
+}
+
+.markdown ol {
+  display: block;
+  list-style-type: decimal;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+}
+
+.markdown strike {
+  text-decoration: line-through;
+}
+.markdown strong {
+  font-weight: bold;
+}
+.markdown table {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: gray;
+}
+.markdown tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+.markdown td {
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+.markdown tfoot {
+  display: table-footer-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.markdown th {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: center;
+}
+
+.markdown thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.markdown tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+.markdown u {
+  text-decoration: underline;
+}
+
+.markdown ul {
+  display: block;
+  list-style-type: disc;
+  margin-top: 1em;
+  margin-bottom: 1 em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+}
+
+.markdown q {
+  display: inline;
+}
+
+.markdown q::before {
+  content: open-quote;
+}
+
+.markdown q::after {
+  content: close-quote;
+}
+
+.markdown pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+}
+
+.markdown menu {
+  display: block;
+  list-style-type: disc;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 40px;
+}
+
+.markdown mark {
+  background-color: yellow;
+  color: black;
+}
+
+.markdown legend {
+  display: block;
+  padding-left: 2px;
+  padding-right: 2px;
+  border: none;
+}
+
+.markdown label {
+  cursor: default;
+}
+
+.markdown dl {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.markdown dt {
+  display: block;
+}
+
+.markdown del {
+  text-decoration: line-through;
+}
+
+.markdown dd {
+  display: block;
+  margin-left: 40px;
+}
+
+.markdown blockquote {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 40px;
+  margin-right: 40px;
 }

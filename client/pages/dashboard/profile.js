@@ -55,13 +55,13 @@ function Profile({ user, token, posts }) {
                 })
                 setEdit(false)
                 dispatch(openToast({
-                    message : "Bio updated!",
-                    severity : "success"
+                    message: "Bio updated!",
+                    severity: "success"
                 }))
                 location.reload()
             }
             catch (err) {
-                console.log(err)
+
                 dispatch(errorToast())
             }
         }
@@ -76,12 +76,12 @@ function Profile({ user, token, posts }) {
 
     return (
         <Layout token={token} user={user} className='p-[20px]'>
-            <div className='flex flex-row justify-start gap-[50px]'>
+            <div className='flex flex-row justify-start gap-[50px] mb-5'>
                 {loaded && !error &&
                     (<>
                         <List title="Followers" open={open1} setOpen={setOpen1} token={token} listOffset={list1Offset} items={data.followers} />
                         <List title="Following" open={open2} setOpen={setOpen2} token={token} listOffset={list2Offset} items={data.following} />
-                        <div className='bg-[rgba(0,0,0,0.4)] w-[120px] h-[120px] rounded-full flex justify-center items-center'>
+                        <div className='bg-dpColor w-[120px] h-[120px] rounded-full flex justify-center items-center'>
                             <h1 className='text-white text-[48px]'>{data.fname[0] + data.lname[0]}</h1>
                         </div>
                         <div className='flex flex-col max-w-[350px]'>
@@ -91,25 +91,28 @@ function Profile({ user, token, posts }) {
                             </div>
                             <h3 className='font-[500]'>{data.fname + ' ' + data.lname} </h3>
                             {edit ?
-                                <div className='flex flex-col items-start gap-[20px] margin'>
-                                    <textarea className='w-[300px] h-[80px] border-2 rounded p-2' value={bio} onChange={(e) => setBio(e.target.value)} />
-                                    <button onClick={updateBioHandler}>Save</button>
+                                <div className='flex flex-col items-start margin'>
+                                    <textarea className='w-[300px] border-b-2 outline-none border-0 rounded' value={bio} onChange={(e) => setBio(e.target.value)} />
+                                    <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={updateBioHandler}>Save</button>
                                 </div>
                                 :
                                 <div className='flex flex-col items-start gap-[20px] margin'>
-                                    <h4 className='font-[400]'>{data.bio}</h4>
-                                    <button onClick={() => setEdit(true)}>{data.bio ? "Edit bio" : "Add bio"}</button>
+                                    <h4 className='font-[400] w-[300px]'>{data.bio}</h4>
+                                    <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setEdit(true)}>{data.bio ? "Edit bio" : "Add bio"}</button>
                                 </div>
                             }
 
                         </div>
                     </>)}
             </div>
-            <Link href='/dashboard/posts/new-post'>
-                <button className='background'>Create new Post</button>
-            </Link>
-            <div className='flex flex-col gap-[20px] mt-[30px]'>
-                <h1>Your posts</h1>
+            <hr/>
+            <div className='flex justify-between items-center mt-5'>
+                <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)]'>Your posts</h1>
+                <Link href='/dashboard/posts/new-post'>
+                    <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition'>Create new Post</button>
+                </Link>
+            </div>
+            <div className='flex flex-col gap-[20px] mt-[10px]'>
                 {posts && posts.map((post, index) => {
                     return (
                         <PostBox post={post} token={token} user={user} key={index} />

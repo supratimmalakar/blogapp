@@ -37,30 +37,31 @@ function NewPost({ user, token }) {
         }
     }
     return (
-        <Layout token={token} user={user}>
+        <Layout token={token} user={user} className='bg-primaryLight'>
             {!previewMode ?
                 <form className='flex flex-col flex-auto w-full h-full gap-[20px] p-[30px]' onSubmit={onSubmit}>
-                    <h1>Create a new post</h1>
+                    <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)]'>Create a new post</h1>
                     <div className='w-full h-full flex flex-col gap-[30px]'>
-                        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder='title' />
-                        <textarea value={markdown} onChange={(e) => {
-                            setMarkdown(e.target.value)
-                        }} className='h-full' placeholder='enter markdown here' />
+                        <input className='p-2 border-2 rounded' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />
+                        <textarea
+                            value={markdown} onChange={(e) => {
+                                setMarkdown(e.target.value)
+                            }}
+                            className='h-full border-2 p-2 rounded'
+                            placeholder='Enter markdown here' />
                     </div>
-                    <div className='flex flex-row gap-[100px]'>
-                        <button onClick={() => setPreviewMode(true)}>Preview</button>
-                        <button type="submit">Post</button>
+                    <div className='flex flex-row gap-[30px]'>
+                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setPreviewMode(true)}>Preview</button>
+                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' type="submit">Post</button>
                     </div>
                 </form>
                 :
                 <div className='flex flex-col flex-auto w-full h-full gap-[20px] p-[30px]'>
-                    <ReactMarkdown className={`w-full h-full ${styles.markdown}`} remarkPlugins={[remarkGfm]}>
+                    <h1 className='text-[20px] font-bold'>{title}</h1>
+                    <ReactMarkdown className={`w-full h-full ${styles.markdown}`} >
                         {markdown}
                     </ReactMarkdown>
-                    <div className='flex flex-row gap-[100px]'>
-                        <button onClick={() => setPreviewMode(false)}>Edit</button>
-                        <button type="submit">Post</button>
-                    </div>
+                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setPreviewMode(false)}>Edit</button>
                 </div>}
         </Layout>
     )

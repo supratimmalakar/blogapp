@@ -11,33 +11,41 @@ function Login() {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data)
         axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
             {
                 email: data.email,
                 password: data.password
-            }, {withCredentials : true})
+            }, { withCredentials: true })
             .then(res => {
                 dispatch(openToast({
-                    message : "Logged in successfully",
-                    severity : "success"
+                    message: "Logged in successfully",
+                    severity: "success"
                 }))
                 router.push('/dashboard')
             })
             .catch(error => {
                 dispatch(openToast({
-                message: error.response.data,
-                severity: "error"
-            }))
-        })
+                    message: error.response.data,
+                    severity: "error"
+                }))
+            })
     }
 
     return (
         <div>
-            <form className='flex flex-col w-1/3 mx-auto my-[100px] gap-[50px]' onSubmit={handleSubmit(onSubmit)}>
-                <input className='h-[40px] px-3 border rounded-md' placeholder='email' {...register('email')} />
-                <input className='h-[40px] px-3 border rounded-md' placeholder='password' {...register('password')} />
-                <button type='submit'>Login</button>
+            <form className='flex flex-col w-1/3 mx-auto my-[100px] gap-[50px] bg-primaryLight rounded shadow-xl p-10' onSubmit={handleSubmit(onSubmit)}>
+                <div className='flex flex-col'>
+                    <h1 className='font-bold text-[46px] mb-0 text-[rgba(0,0,0,0.6)]'>Blogger</h1>
+                    <p className='text-[16px] text-[rgba(0,0,0,0.6)]'>Markdown powered blogs and much more</p>
+                </div>
+                <input className=' outline-none h-[40px] px-3 border rounded-md' placeholder='Email' {...register('email')} />
+                <input className=' outline-none h-[40px] px-3 border rounded-md' placeholder='Password' {...register('password')} />
+                <button className='bg-btn px-2 py-2 rounded text-white font-bold hover:bg-btnHover transition' type='submit'>Login</button>
+                <div className='flex flex-col'>
+                    <hr />
+                    <p className='text-[16px] my-3  text-[rgba(0,0,0,0.6)]'>Not registered?</p>
+                    <p onClick={() => router.push('/register')} className='bg-btn px-2 py-2 rounded text-white font-bold text-center cursor-pointer hover:bg-btnHover transition'>Register here</p>
+                </div>
             </form>
         </div>
     )
