@@ -1,8 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { openToast, errorToast } from '../redux/toastReducer';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function Login() {
+    const dispatch = useDispatch()
+    const router = useRouter();
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
@@ -13,9 +18,18 @@ function Login() {
                 password: data.password
             }, {withCredentials : true})
             .then(res => {
-                location.reload()
+                dispatch(openToast({
+                    message : "Logged in successfully",
+                    severity : "success"
+                }))
+                router.push('/dashboard')
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                dispatch(openToast({
+                message: error.response.data,
+                severity: "error"
+            }))
+        })
     }
 
     return (

@@ -3,9 +3,14 @@ import Layout from '../../../components/Layout'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import axios from 'axios';
-import styles from '../../../styles/Markdown.module.css'
+import styles from '../../../styles/Markdown.module.css';
+import { openToast, errorToast } from '../../../redux/toastReducer';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router'
 
 function NewPost({ user, token }) {
+    const router = useRouter()
+    const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [markdown, setMarkdown] = useState("");
     const [previewMode, setPreviewMode] = useState(false);
@@ -21,8 +26,14 @@ function NewPost({ user, token }) {
                     Authorization: 'Bearer ' + token
                 }
             })
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
+                .then(res => {
+                    dispatch(openToast({
+                        message: "Post uploaded",
+                        severity: "success"
+                    }))
+                    router.push('/dashboard/profile')
+                })
+                .catch(err => dispatch(errorToast()))
         }
     }
     return (

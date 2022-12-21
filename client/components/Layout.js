@@ -4,8 +4,12 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Link from 'next/link'
 import axios from 'axios'
 import { useFetch } from '../utils/useFetch'
+import { openToast, errorToast } from '../redux/toastReducer';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function Layout({ children, token, user, className }) {
+    const dispatch = useDispatch();
     const profileBtnRef = useRef()
     const searchRef = useRef()
     const [results, setResults] = useState([])
@@ -40,8 +44,13 @@ function Layout({ children, token, user, className }) {
             withCredentials: true
         })
             .then(res => {
-                location.reload()
+                location.reload();
+                dispatch(openToast({
+                    message : "Logged out successfully",
+                    severity : "success"
+                }))
             })
+            .catch(err => dispatch(errorToast()))
     }
 
     const searchOnChange = async (e) => {
@@ -79,12 +88,12 @@ function Layout({ children, token, user, className }) {
                 {results.length > 0 &&
                     results.map((result, idx) => {
                         return (
-                            <div key={idx} className='flex flex-row justify-between'>
+                            <div key={idx} className='flex flex-row justify-between items-center gap-[30px] border-t-2'>
                                 <div className='flex flex-col'>
                                     <h2>{result.fname}</h2>
                                     <h4 className='text-[11px]'>{result.email}</h4>
                                 </div>
-                                <Link href={`/dashboard/users/${result._id}`}>
+                                <Link className='h-fit' href={`/dashboard/users/${result._id}`}>
                                     <button>Visit Profile</button>
                                 </Link>
                             </div>
@@ -113,23 +122,20 @@ function Layout({ children, token, user, className }) {
             <div className='w-full h-[100vh]'>
                 <div className='flex h-[90px] border-b-2 items-center justify-between'>
                     <div className='flex gap-[30px] ml-5 items-center'>
-                        <h1>Blogger</h1>
+                        <Link href="/dashboard">
+                            <h1>Blogger</h1>
+                        </Link>
                         <input
                             ref={searchRef}
                             onChange={searchOnChange}
                             placeholder='Search users'
                             className='w-[300px] h-[40px] px-2' />
                     </div>
-                    <div className='flex gap-[20px] mr-5'>
-                        <button>
-                            <NotificationsNoneIcon />
-                        </button>
-                        <button onClick={() => setOpen(true)} ref={profileBtnRef}>
-                            <PermIdentityIcon />
-                        </button>
-                    </div>
+                    <button className='mr-5' onClick={() => setOpen(true)} ref={profileBtnRef}>
+                        <PermIdentityIcon />
+                    </button>
                 </div>
-                <div className={`w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[600px] overflow-y-auto ${className ? className : ''}`}>
+                <div className={`w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[800px] overflow-y-auto ${className ? className : ''}`}>
                     {children}
                 </div>
             </div>

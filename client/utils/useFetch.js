@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { errorToast } from '../redux/toastReducer';
+import { useDispatch } from 'react-redux';
 
 
 export const useFetch = (route, method, token, payload) => {
+    const dispatch = useDispatch()
     const [data, setData] = useState(null);
     const [error, setError] = useState("");
     const [loaded, setLoaded] = useState(false);
@@ -38,6 +41,7 @@ export const useFetch = (route, method, token, payload) => {
 
                     setData(response.data);
                 } catch (error) {
+                    dispatch(errorToast())
                     setError(error.message);
                 } finally {
                     setLoaded(true);

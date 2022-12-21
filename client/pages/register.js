@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { openToast, errorToast } from '../redux/toastReducer';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function Register() {
+  const dispatch = useDispatch();
+  const router = useRouter()
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/register`, {
       ...data
     })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+    .then(res => {
+      dispatch(openToast({
+        message : "Registered successfully!",
+        severity : "success"
+      }))
+      router.push('/login')
+    })
+      .catch(err => dispatch(openToast({
+        message: err.response.data,
+        severity: "error"
+      })))
   }
   return (
     <div>
