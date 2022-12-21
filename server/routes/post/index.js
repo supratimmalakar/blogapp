@@ -37,7 +37,7 @@ router.get('/:userId', verify, async (req, res) => {
             '_id': {
                 $in: user.posts
             }
-        })
+        }).sort({ createdAt: -1 }).exec()
         res.status(200).json(posts);
     }
     catch (err) {
