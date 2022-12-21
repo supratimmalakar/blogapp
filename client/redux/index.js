@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './userReducer'
+import toastReducer from './toastReducer'
 
 export const store = configureStore({
     reducer: {
-        user: userReducer
+        toast: toastReducer
     },
 })
