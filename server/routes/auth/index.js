@@ -37,21 +37,23 @@ router.post('/login', async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
         else {
             const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-            
+
             userObj = {
-                name : user.fname + ' ' + user.lname,
-                email : user.email,
-                id : user._id
+                name: user.fname + ' ' + user.lname,
+                email: user.email,
+                id: user._id
             }
             const tokenObj = JSON.stringify({
                 token,
-                user : {
+                user: {
                     ...userObj
                 }
             })
             res.cookie('blogToken', tokenObj, {
                 httpOnly: true,
-                path: '/',
+                domain: '.onrender.com',
+                sameSite: "none",
+                secure: true,
             }).status(200).json({ message: 'success!' })
         }
     }
@@ -61,9 +63,12 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    res.clearCookie('blogToken');
+    res.clearCookie('blogToken', {
+        domain: '.onrender.com',
+        secure: true,
+    });
     res.status(200).json({
-        "message" : 'cookie cleared'
+        "message": 'cookie cleared'
     })
 })
 
