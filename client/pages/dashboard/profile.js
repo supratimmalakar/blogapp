@@ -86,8 +86,24 @@ function Profile({ user, token, posts }) {
                         </div>
                         <div className='flex flex-col max-w-[350px]'>
                             <div className='flex flex-row gap-[15px]'>
-                                <p className='cursor-pointer' onClick={() => setOpen1(true)} ref={followerRef}><span className='font-bold'>{data.followers.length}</span> followers</p>
-                                <p className='cursor-pointer' onClick={() => setOpen2(true)} ref={followingRef}><span className='font-bold'>{data.following.length}</span> following</p>
+                                <p
+                                    className='cursor-pointer text-[rgba(0,0,0,0.8)] hover:text-black'
+                                    onClick={() => {
+                                        setOpen2(false)
+                                        setOpen1(true)
+                                    }}
+                                    ref={followerRef}>
+                                    <span className='font-bold'>{data.followers.length}</span> followers
+                                </p>
+                                <p
+                                    className='cursor-pointer text-[rgba(0,0,0,0.8)] hover:text-black'
+                                    onClick={() => {
+                                        setOpen1(false)
+                                        setOpen2(true)
+                                    }}
+                                    ref={followingRef}>
+                                    <span className='font-bold'>{data.following.length}</span> following
+                                </p>
                             </div>
                             <h3 className='font-[500]'>{data.fname + ' ' + data.lname} </h3>
                             {edit ?
@@ -105,7 +121,7 @@ function Profile({ user, token, posts }) {
                         </div>
                     </>)}
             </div>
-            <hr/>
+            <hr />
             <div className='flex justify-between items-center mt-5'>
                 <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)]'>Your posts</h1>
                 <Link href='/dashboard/posts/new-post'>

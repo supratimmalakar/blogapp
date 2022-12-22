@@ -69,14 +69,15 @@ function PostBox(props) {
     }
     return (
         <div className={`flex flex-col flex-auto w-full ${!extend && 'max-h-[300px]'} rounded p-[15px] bg-primaryLight shadow-lg`}>
-            <div className='flex gap-2 items-center'>
+            <div className='flex gap-2 items-center mb-3'>
                 <div className='bg-dpColor w-[30px] h-[30px] rounded-full flex justify-center items-center'>
                     <h1 className='text-white text-[10px] font-bold'>{user.name[0] + user.name.split(" ")[1][0]}</h1>
                 </div>
-            <Link href={`/dashboard/users/${post.createdBy.id}`}>
-                <p className='text-[16px] font-600 hover:underline'>{post.createdBy.email}</p>
-            </Link>
+                <Link href={`/dashboard/users/${post.createdBy.id}`}>
+                    <p className='text-[16px] font-600 hover:underline'>{post.createdBy.email}</p>
+                </Link>
             </div>
+            <hr/>
             <p className='text-[28px] font-600'>{post.title}</p>
             <div ref={markdownRef} className={`h-full overflow-hidden ${styles.markdown}`}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -88,9 +89,9 @@ function PostBox(props) {
             <div className='flex gap-[10px]'>
                 {post && post.likes.length > 0 && post.likes.indexOf(user.id) >= 0
                     ?
-                    <FavoriteIcon style={{color : 'red'}} className='cursor-pointer' onClick={unlike}/>
+                    <FavoriteIcon style={{ color: 'red' }} className='cursor-pointer' onClick={unlike} />
                     :
-                    <FavoriteBorderIcon className='cursor-pointer' onClick={like}/>}
+                    <FavoriteBorderIcon className='cursor-pointer' onClick={like} />}
 
                 <p>{post.likes.length} likes</p>
                 <p>{new Date(post.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' })}</p>
