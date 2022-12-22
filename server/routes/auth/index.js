@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
                 httpOnly: true,
                 sameSite: "none",
                 secure: true,
-            }).status(200).json({ message: 'success!' })
+            }).status(200)
         }
     }
     catch (error) {
