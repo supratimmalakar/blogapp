@@ -122,7 +122,7 @@ function UserProfile({ user, token }) {
                     </>)}
             </div>
             <hr />
-            {loaded && !error && <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)] mt-5'>{data.fname}'s posts</h1>}
+            {loaded && !error && <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)] mt-5'>{data.fname}&apos;s posts</h1>}
             <div className='flex flex-col gap-[20px] mt-[30px]'>
 
                 {postsLoaded && !postsError && posts.map((post, index) => {
