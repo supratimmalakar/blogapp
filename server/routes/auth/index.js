@@ -50,7 +50,7 @@ router.post('/login', async (req, res) => {
                 }
             })
             res.cookie('blogToken', tokenObj, {
-                httpOnly: true,
+                httpOnly: false,
                 sameSite: "none",
                 secure: true,
             }).status(200).json({ message: 'success!' })

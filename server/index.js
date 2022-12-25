@@ -18,7 +18,7 @@ const app = express();
 app.set("trust proxy", 1);
 
 const corsOptions = {
-    origin: 'https://blogapp-supratimmalakar.vercel.app',
+    origin: process.env.ORIGIN,
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200
 }
