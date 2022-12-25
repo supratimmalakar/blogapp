@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
             res.cookie('blogToken', tokenObj, {
                 httpOnly: true,
                 sameSite: "none",
-                // secure: true,
+                secure: true,
             }).status(200).json({ message: 'success!' })
         }
     }
@@ -63,7 +63,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/logout', (req, res) => {
     res.clearCookie('blogToken', {
-        // secure: true,
+        secure: true,
     });
     res.status(200).json({
         "message": 'cookie cleared'
