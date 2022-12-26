@@ -51,9 +51,9 @@ router.post('/login', async (req, res) => {
             })
             res.cookie('blogToken', tokenObj, {
                 httpOnly: false,
-                sameSite: "none",
+                sameSite: "lax",
                 secure: true,
-                domain: 'blogapp-supratimmalakar.vercel.app'
+                domain: '.vercel.app'
             }).status(200).json({ message: 'success!' })
             res.send();
         }
