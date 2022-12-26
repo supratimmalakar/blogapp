@@ -50,8 +50,8 @@ router.post('/login', async (req, res) => {
                 }
             })
             res.cookie('blogToken', tokenObj, {
-                httpOnly: false,
-                sameSite: "lax",
+                httpOnly: true,
+                sameSite: "none",
                 secure: true,
                 domain: '.vercel.app'
             }).status(200).json({ message: 'success!' })
