@@ -15,7 +15,6 @@ const feedRouter = require('./routes/post/feed')
 
 const app = express();
 
-app.set("trust proxy", 1);
 
 const corsOptions = {
     origin: process.env.ORIGIN,
@@ -26,7 +25,8 @@ const corsOptions = {
 app.use(cookieParser());
 app.use(cors(corsOptions))
 app.use(express.json());
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
+
 
 app.get("/", (req, res) => {
     res.send("App running");
