@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
                 httpOnly: false,
                 sameSite: "none",
                 secure: true,
-                domain: 'vercel.app'
+                domain: 'blogapp-supratimmalakar.vercel.app'
             }).status(200).json({ message: 'success!' })
             res.send();
         }
