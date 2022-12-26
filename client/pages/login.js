@@ -11,38 +11,11 @@ function Login() {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
-        // axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
-        //     {
-        //         email: data.email,
-        //         password: data.password
-        //     }, { withCredentials: true })
-        //     .then(res => {
-        //         dispatch(openToast({
-        //             message: "Logged in successfully",
-        //             severity: "success"
-        //         }))
-        //         router.push('/dashboard')
-        //     })
-        //     .catch(error => {
-        //         dispatch(openToast({
-        //             message: error.response.data,
-        //             severity: "error"
-        //         }))
-        //     })
-        const body = JSON.stringify({
-            email: data.email,
-            password: data.password
-        })
-        console.log({body})
-        await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`, {
-            method: 'POST',
-            credentials: 'include',
-            headers : {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body : body
-        })
+        axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
+            {
+                email: data.email,
+                password: data.password
+            }, { withCredentials: true })
             .then(res => {
                 dispatch(openToast({
                     message: "Logged in successfully",
@@ -56,6 +29,33 @@ function Login() {
                     severity: "error"
                 }))
             })
+        // const body = JSON.stringify({
+        //     email: data.email,
+        //     password: data.password
+        // })
+        // console.log({body})
+        // await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`, {
+        //     method: 'POST',
+        //     credentials: 'include',
+        //     headers : {
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json'
+        //     },
+        //     body : body
+        // })
+        //     .then(res => {
+        //         dispatch(openToast({
+        //             message: "Logged in successfully",
+        //             severity: "success"
+        //         }))
+        //         router.push('/dashboard')
+        //     })
+        //     .catch(error => {
+        //         dispatch(openToast({
+        //             message: error.response.data,
+        //             severity: "error"
+        //         }))
+        //     })
     }
 
     return (
