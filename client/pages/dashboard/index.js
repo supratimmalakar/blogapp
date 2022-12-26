@@ -31,9 +31,9 @@ function Dashboard({ token, user, feedPosts }) {
 export async function getServerSideProps(context) {
   const token = JSON.parse(context.req.cookies.blogToken);
   var posts = [];
-  await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feed?userId=${token.user.id}`, {
+  await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feed?userId=${token?.user.id}`, {
     headers: {
-      Authorization: "Bearer " + token.token
+      Authorization: "Bearer " + token?.token
     }
   })
     .then(res => {
@@ -42,8 +42,8 @@ export async function getServerSideProps(context) {
     .catch(err => console.log(err))
   return {
     props: {
-      token: token.token,
-      user: token.user,
+      token: token?.token,
+      user: token?.user,
       feedPosts : posts
     }
   }
