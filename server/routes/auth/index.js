@@ -49,11 +49,12 @@ router.post('/login', async (req, res) => {
                     ...userObj
                 }
             })
+            // res.setHeader('set-cookie', `blogToken=${tokenObj}`)
             res.cookie('blogToken', tokenObj, {
                 httpOnly: true,
                 sameSite: "none",
                 secure: true,
-                domain: '.vercel.app'
+                domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost'
             }).status(200).json({ message: 'success!' })
             res.send();
         }

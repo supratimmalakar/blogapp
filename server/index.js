@@ -11,21 +11,20 @@ const postRouter = require('./routes/post/index');
 const feedRouter = require('./routes/post/feed')
 
 
-
-
 const app = express();
 
 
 const corsOptions = {
     origin: process.env.ORIGIN,
     credentials: true,            //access-control-allow-credentials:true
-    optionSuccessStatus: 200
 }
 
 app.use(cookieParser());
 app.use(cors(corsOptions))
 app.use(express.json());
-// app.set("trust proxy", 1);
+
+process.env.NODE_ENV === 'production' 
+&& app.set("trust proxy", 1);
 
 
 app.get("/", (req, res) => {

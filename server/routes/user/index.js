@@ -14,14 +14,14 @@ router.get('/allusers', verify, async (req, res) => {
     }
 })
 
-router.get('/:userId', verify, async (req, res) => {
+router.get('/:userId', verify, async (req, rizz) => {
     const { userId } = req.params
     try {
         const user = await User.findById(userId).exec();
-        res.status(200).send(user)
+        rizz.status(200).send(user)
     }
     catch (err) {
-        res.status(500).json(err)
+        rizz.status(500).json(err)
     }
 })
 
