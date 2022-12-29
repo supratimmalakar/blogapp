@@ -50,13 +50,13 @@ router.post('/login', async (req, res) => {
                 }
             })
             // res.setHeader('set-cookie', `blogToken=${tokenObj}`)
-            res.cookie('blogToken', tokenObj, {
-                httpOnly: true,
-                sameSite: "none",
-                secure: true,
-                domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost'
-            }).status(200).json({ message: 'success!' })
-            res.send();
+            // res.cookie('blogToken', tokenObj, {
+            //     httpOnly: true,
+            //     sameSite: "none",
+            //     secure: true,
+            //     domain: process.env.NODE_ENV === 'production' ? '.vercel.app' : 'localhost'
+            // }).status(200).json({ message: 'success!' })
+            res.status(200).json(tokenObj);
         }
     }
     catch (error) {

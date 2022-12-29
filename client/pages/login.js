@@ -4,6 +4,7 @@ import axios from 'axios'
 import { openToast, errorToast } from '../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 function Login() {
     const dispatch = useDispatch()
@@ -17,6 +18,8 @@ function Login() {
                 password: data.password
             }, { withCredentials: true })
             .then(res => {
+                // const authState = JSON.stringify(res.data)
+                Cookies.set('blogToken', res.data);
                 dispatch(openToast({
                     message: "Logged in successfully",
                     severity: "success"
