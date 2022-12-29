@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { openToast, errorToast } from '../redux/toastReducer';
@@ -11,8 +11,10 @@ function Login() {
     const dispatch = useDispatch()
     const router = useRouter();
     const { register, handleSubmit } = useForm();
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = async (data) => {
+        setLoading(true)
         axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`,
             {
                 email: data.email,
@@ -26,41 +28,16 @@ function Login() {
                     message: "Logged in successfully",
                     severity: "success"
                 }))
+                setLoading(false)
                 router.push('/dashboard')
             })
             .catch(error => {
+                setLoading(false)
                 dispatch(openToast({
                     message: error.response.data,
                     severity: "error"
                 }))
-            })
-        // const body = JSON.stringify({
-        //     email: data.email,
-        //     password: data.password
-        // })
-        // console.log({body})
-        // await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/login`, {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     headers : {
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json'
-        //     },
-        //     body : body
-        // })
-        //     .then(res => {
-        //         dispatch(openToast({
-        //             message: "Logged in successfully",
-        //             severity: "success"
-        //         }))
-        //         router.push('/dashboard')
-        //     })
-        //     .catch(error => {
-        //         dispatch(openToast({
-        //             message: error.response.data,
-        //             severity: "error"
-        //         }))
-        //     })
+            })                                 
     }
 
     return (
@@ -76,7 +53,7 @@ function Login() {
                 </div>
                 <input className=' outline-none h-[40px] px-3 border rounded-md' placeholder='Email' {...register('email')} />
                 <input className=' outline-none h-[40px] px-3 border rounded-md' placeholder='Password' {...register('password')} />
-                <button className='bg-btn px-2 py-2 rounded text-white font-bold hover:bg-btnHover transition' type='submit'>Login</button>
+                <button className='bg-btn h-12 px-2 py-2 rounded text-white font-bold hover:bg-btnHover transition' type='submit'>{loading ? <div class="spinner-border animate-spin inline-block w-6 h-6 border-4 rounded-full" role="status"/> : 'Login'}</button>
                 <div className='flex flex-col'>
                     <hr />
                     <p className='text-[16px] my-3  text-[rgba(0,0,0,0.6)]'>Not registered?</p>

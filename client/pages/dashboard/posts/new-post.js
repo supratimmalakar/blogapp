@@ -14,8 +14,10 @@ function NewPost({ user, token }) {
     const [title, setTitle] = useState("");
     const [markdown, setMarkdown] = useState("");
     const [previewMode, setPreviewMode] = useState(false);
+    const [loading, setLoading] = useState(false)
     const onSubmit = (e) => {
         e.preventDefault();
+        setLoading(true)
         if (title.length > 0 && markdown.length > 0) {
             axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/posts/create-post`, {
                 title,
@@ -27,13 +29,17 @@ function NewPost({ user, token }) {
                 }
             })
                 .then(res => {
+                    setLoading(false)
                     dispatch(openToast({
                         message: "Post uploaded",
                         severity: "success"
                     }))
                     router.push('/dashboard/profile')
                 })
-                .catch(err => dispatch(errorToast()))
+                .catch(err => {
+                    setLoading(false)
+                    dispatch(errorToast())
+                })
         }
     }
     return (
@@ -52,7 +58,7 @@ function NewPost({ user, token }) {
                     </div>
                     <div className='flex flex-row gap-[30px]'>
                         <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setPreviewMode(true)}>Preview</button>
-                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' type="submit">Post</button>
+                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' type="submit">{loading ? <div class="spinner-border animate-spin inline-block w-4 h-4 border-4 rounded-full" role="status" /> : 'Post'}</button>
                     </div>
                 </form>
                 :
@@ -61,7 +67,7 @@ function NewPost({ user, token }) {
                     <ReactMarkdown className={`w-full h-full ${styles.markdown}`} >
                         {markdown}
                     </ReactMarkdown>
-                        <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setPreviewMode(false)}>Edit</button>
+                    <button className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition' onClick={() => setPreviewMode(false)}>Edit</button>
                 </div>}
         </Layout>
     )
