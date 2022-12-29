@@ -37,7 +37,7 @@ function NewPost({ user, token }) {
         }
     }
     return (
-        <Layout token={token} user={user} className='bg-primaryLight'>
+        <Layout token={token} user={user} className='bg-primaryLight' title='New Post'>
             {!previewMode ?
                 <form className='flex flex-col flex-auto w-full h-full gap-[20px] p-[30px]' onSubmit={onSubmit}>
                     <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)]'>Create a new post</h1>

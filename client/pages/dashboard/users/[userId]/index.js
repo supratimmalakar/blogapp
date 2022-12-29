@@ -8,7 +8,7 @@ import List from '../../../../components/List'
 import { openToast, errorToast } from '../../../../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 
-function UserProfile({ user, token }) {
+function UserProfile({ user, token, data }) {
     const dispatch = useDispatch()
     const router = useRouter();
     const [userFollowers, setUserFollowers] = useState([])
@@ -26,9 +26,9 @@ function UserProfile({ user, token }) {
     const [open1, setOpen1] = useState(false)
     const [open2, setOpen2] = useState(false)
     const { data: posts, error: postsError, loaded: postsLoaded } = useFetch(`/posts/${userId}`, "get", token);
-    const { data, error, loaded } = useFetch(`/user/${userId}`, "get", token);
+    // const { data, error, loaded } = useFetch(`/user/${userId}`, "get", token);
     useEffect(() => {
-        if (loaded) {
+        
 
             setList1Offset({
                 top: followerRef.current.offsetTop,
@@ -38,9 +38,9 @@ function UserProfile({ user, token }) {
                 top: followingRef.current.offsetTop,
                 left: followingRef.current.offsetLeft
             })
-        }
+        
 
-    }, [loaded])
+    }, [])
 
     useEffect(() => {
         if (user.id === userId)
@@ -48,10 +48,10 @@ function UserProfile({ user, token }) {
     }, [])
 
     useEffect(() => {
-        if (loaded) {
+        
             setUserFollowers([...data.followers])
-        }
-    }, [loaded]);
+        
+    }, []);
 
     const unfollowUser = async () => {
         await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/unfollow`, {
@@ -95,10 +95,9 @@ function UserProfile({ user, token }) {
             .catch(err => dispatch(errorToast()))
     }
     return (
-        <Layout token={token} user={user} className='p-[20px]'>
+        <Layout token={token} user={user} className='p-[20px]' title={data.fname + ' ' + data.lname}>
             <div className='flex flex-row justify-start gap-[50px] mb-5'>
-                {loaded && !error &&
-                    (<>
+                <>
                         <List title="Followers" open={open1} setOpen={setOpen1} token={token} listOffset={list1Offset} items={data.followers} />
                         <List title="Following" open={open2} setOpen={setOpen2} token={token} listOffset={list2Offset} items={data.following} />
                         <div className='bg-dpColor w-[120px] h-[120px] rounded-full flex justify-center items-center'>
@@ -119,10 +118,10 @@ function UserProfile({ user, token }) {
                                 <button onClick={followUser} className='bg-btn px-2 py-1 rounded text-white font-bold hover:bg-btnHover transition'>Follow</button>
                             }
                         </div>
-                    </>)}
+                    </>
             </div>
             <hr />
-            {loaded && !error && <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)] mt-5'>{data.fname}&apos;s posts</h1>}
+            <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)] mt-5'>{data.fname}&apos;s posts</h1>
             <div className='flex flex-col gap-[20px] mt-[30px]'>
 
                 {postsLoaded && !postsError && posts.map((post, index) => {
@@ -137,10 +136,21 @@ function UserProfile({ user, token }) {
 
 export async function getServerSideProps(context) {
     const token = JSON.parse(context.req.cookies.blogToken)
+    var reqUser = null;
+    await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/${context.params.userId}`, {
+        headers: {
+            Authorization: "Bearer " + token.token
+        }
+    })
+        .then(res => {
+            reqUser = res.data
+        })
+        .catch(err => console.log(err))
     return {
         props: {
             token: token.token,
-            user: token.user
+            user: token.user,
+            data: reqUser
         }
     }
 }

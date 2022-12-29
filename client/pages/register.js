@@ -4,6 +4,7 @@ import axios from 'axios'
 import { openToast, errorToast } from '../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Head from 'next/head'
 
 function Register() {
   const dispatch = useDispatch();
@@ -27,6 +28,10 @@ function Register() {
   }
   return (
     <div>
+      <Head>
+        <title>Register</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <form className='flex flex-col w-1/3 mx-auto my-[90px] gap-[50px] bg-primaryLight rounded shadow-xl p-10' onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col'>
           <h1 className='font-bold text-[46px] mb-0 text-[rgba(0,0,0,0.6)]'>Blogger</h1>

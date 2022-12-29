@@ -7,6 +7,10 @@ export default function Home() {
   const router = useRouter()
   return (
     <div className='flex flex-col w-1/3 mx-auto my-[100px] gap-[50px] bg-primaryLight rounded shadow-xl p-10'>
+      <Head>
+        <title>Blogger</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className='flex flex-col'>
         <h1 className='font-bold text-[46px] mb-0 text-[rgba(0,0,0,0.6)]'>Blogger</h1>
         <p className='text-[16px] text-[rgba(0,0,0,0.6)]'>Markdown powered blogs and much more</p>

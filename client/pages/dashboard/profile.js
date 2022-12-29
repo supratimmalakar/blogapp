@@ -75,7 +75,7 @@ function Profile({ user, token, posts }) {
 
 
     return (
-        <Layout token={token} user={user} className='p-[20px]'>
+        <Layout token={token} user={user} className='p-[20px]' title="Profile">
             <div className='flex flex-row justify-start gap-[50px] mb-5'>
                 {loaded && !error &&
                     (<>

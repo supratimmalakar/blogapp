@@ -10,7 +10,7 @@ function Dashboard({ token, user, feedPosts }) {
 
 
   return (
-    <Layout token={token} user={user} className='p-[20px]'>
+    <Layout token={token} user={user} className='p-[20px]' title='Feed'>
       <div className='flex justify-between items-center mt-5 mb-2'>
         <h1 className='text-[30px] font-bold text-[rgba(0,0,0,0.7)]'>Your feed</h1>
         <Link href='/dashboard/posts/new-post'>

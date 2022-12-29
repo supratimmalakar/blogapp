@@ -7,8 +7,9 @@ import { useFetch } from '../utils/useFetch'
 import { openToast, errorToast } from '../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
-function Layout({ children, token, user, className }) {
+function Layout({ children, token, user, className, title }) {
     const router = useRouter()
     const dispatch = useDispatch();
     const profileBtnRef = useRef()
@@ -122,6 +123,10 @@ function Layout({ children, token, user, className }) {
     return (
         <>
             <div className='w-full h-[100vh]'>
+                <Head>
+                    <title>{title}</title>
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
                 <div className='flex h-[90px] border-b-2 items-center justify-between bg-primaryDark'>
                     <div className='flex gap-[30px] ml-5 items-center'>
                         <Link href="/dashboard">
