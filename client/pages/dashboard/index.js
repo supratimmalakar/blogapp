@@ -30,6 +30,8 @@ function Dashboard({ token, user, feedPosts }) {
 
 export async function getServerSideProps(context) {
   const token = JSON.parse(context.req.cookies.blogToken);
+  console.log("1",context.req.cookies.blogToken)
+  console.log("2",token.token)
   var posts = [];
   await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feed?userId=${token?.user.id}`, {
     headers: {
