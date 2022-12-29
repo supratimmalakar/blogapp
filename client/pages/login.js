@@ -19,7 +19,7 @@ function Login() {
             }, { withCredentials: true })
             .then(res => {
                 // const authState = JSON.stringify(res.data)
-                Cookies.set('blogToken', res.data);
+                Cookies.set('blogToken', JSON.stringify(res.data));
                 dispatch(openToast({
                     message: "Logged in successfully",
                     severity: "success"
