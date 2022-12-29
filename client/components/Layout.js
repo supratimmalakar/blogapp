@@ -8,6 +8,7 @@ import { openToast, errorToast } from '../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Cookies from 'js-cookie';
 
 function Layout({ children, token, user, className, title }) {
     const router = useRouter()
@@ -42,17 +43,13 @@ function Layout({ children, token, user, className, title }) {
     }, [])
 
     const logout = async () => {
-        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`, {
-            withCredentials: true
-        })
-            .then(res => {
-                location.reload();
-                dispatch(openToast({
-                    message : "Logged out successfully",
-                    severity : "success"
-                }))
-            })
-            .catch(err => dispatch(errorToast()))
+        Cookies.remove("blogToken")
+        dispatch(openToast({
+            message: "Logged out successfully",
+            severity: "success"
+        }))
+        location.reload()
+
     }
 
     const searchOnChange = async (e) => {
@@ -114,7 +111,7 @@ function Layout({ children, token, user, className, title }) {
                         left: offset.left - 95
                     }}>
                     <button className='text-[18px] py-2 font-medium text-[rgba(0,0,0,0.7)] transition hover:bg-primaryMedium hover:text-white' onClick={() => router.push('/dashboard/profile')}>Profile</button>
-                    <hr/>
+                    <hr />
                     <button className='text-[18px] py-2 font-medium text-[rgba(0,0,0,0.7)] transition hover:bg-primaryMedium hover:text-white' onClick={logout}>Logout</button>
                 </div>
             </div>
@@ -139,7 +136,7 @@ function Layout({ children, token, user, className, title }) {
                             className='w-[350px] h-[40px] px-2 bg-[rgba(0,0,0,0.1)] text-white rounded placeholder-white outline-none' />
                     </div>
                     <button className='mr-5' onClick={() => setOpen(true)} ref={profileBtnRef}>
-                        <PermIdentityIcon style={{ color: 'rgba(0,0,0,0.5)'}}/>
+                        <PermIdentityIcon style={{ color: 'rgba(0,0,0,0.5)' }} />
                     </button>
                 </div>
                 <div className={`w-1/2 border-2 h-[calc(100vh-90px)] mx-auto min-w-[800px] overflow-y-auto ${className ? className : ''}`}>
