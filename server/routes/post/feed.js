@@ -17,12 +17,18 @@ router.get('/', verify, async (req, res) => {
         following.forEach(user => {
             feedPostIds = [...feedPostIds, ...user.posts]
         })
-        const feedPosts = await Post.find({
+        const posts = await Post.find({
             '_id' : {
                 $in : feedPostIds
             }
         }).sort({createdAt : -1}).exec()
-        res.status(200).json(feedPosts);
+        const feedPosts = posts.slice(0, pageMax*pageNo)
+
+        
+        res.status(200).json({
+            posts : feedPosts,
+            exhausted : posts.length <= pageMax*pageNo
+        });
     }
     catch (err) {
         res.status(400).send(err)
@@ -64,6 +70,17 @@ router.get('/:postId', verify, async (req, res) => {
     }
     catch (err) {
         res.status(400).json(err)
+    }
+})
+
+router.delete('/:postId', verify, async (req, res) => {
+    const {postId} = req.params;
+    try {
+        await Post.findByIdAndDelete(postId);
+        res.status(200).send("Post deleted")
+    }
+    catch (err) {
+        res.status(400).send(err)
     }
 })
 module.exports = router

@@ -21,9 +21,7 @@ function Login() {
                 password: data.password
             }, { withCredentials: true })
             .then(res => {
-                // const authState = JSON.stringify(res.data)
-                console.log("3", res.data)
-                Cookies.set('blogToken', res.data);
+                Cookies.set('blogToken', res.data, {expires : 7});
                 dispatch(openToast({
                     message: "Logged in successfully",
                     severity: "success"

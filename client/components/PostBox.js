@@ -8,6 +8,7 @@ import { openToast, errorToast } from '../redux/toastReducer';
 import { useDispatch } from 'react-redux';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 function PostBox(props) {
     const dispatch = useDispatch()
@@ -15,7 +16,8 @@ function PostBox(props) {
     const markdownRef = useRef()
     const [post, setPost] = useState(props.post)
     const [isOverflow, setIsOverflow] = useState(false);
-    const [extend, setExtend] = useState(false)
+    const [extend, setExtend] = useState(false);
+    const [display, setDisplay] = useState(true)
     useEffect(() => {
         if (markdownRef.current) {
             if (markdownRef.current.scrollHeight > markdownRef.current.clientHeight) setIsOverflow(true)
@@ -23,6 +25,21 @@ function PostBox(props) {
         }
     }, [markdownRef.current])
 
+    const deletePostHandler = () => {
+        axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feed/${post._id}`, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+            .then(res => {
+                setDisplay(false)
+                dispatch(openToast({
+                    message: "Post was deleted.",
+                    severity: "success"
+                }))
+            })
+            .catch(err => dispatch(errorToast()))
+    }
 
     const like = async () => {
         try {
@@ -68,16 +85,19 @@ function PostBox(props) {
         }
     }
     return (
-        <div className={`flex flex-col flex-auto w-full ${!extend && 'max-h-[300px]'} rounded p-[15px] bg-primaryLight shadow-lg`}>
-            <div className='flex gap-2 items-center mb-3'>
-                <div className='bg-dpColor w-[30px] h-[30px] rounded-full flex justify-center items-center'>
-                    <h1 className='text-white text-[10px] font-bold'>{user.name[0] + user.name.split(" ")[1][0]}</h1>
+        <div className={`${display ? 'flex' : 'hidden'} flex-col flex-auto w-full ${!extend && 'max-h-[300px]'} rounded p-[15px] bg-primaryLight shadow-lg`}>
+            <div className={`flex ${user.id === post.createdBy.id && 'justify-between'}`}>
+                <div className='flex gap-2 items-center mb-3'>
+                    <div className='bg-dpColor w-[30px] h-[30px] rounded-full flex justify-center items-center'>
+                        <h1 className='text-white text-[10px] font-bold'>{user.name[0] + user.name.split(" ")[1][0]}</h1>
+                    </div>
+                    <Link href={`/dashboard/users/${post.createdBy.id}`}>
+                        <p className='text-[16px] font-600 hover:underline'>{post.createdBy.email}</p>
+                    </Link>
                 </div>
-                <Link href={`/dashboard/users/${post.createdBy.id}`}>
-                    <p className='text-[16px] font-600 hover:underline'>{post.createdBy.email}</p>
-                </Link>
+                {user.id === post.createdBy.id && <RemoveCircleOutlineIcon style={{ color: 'red' }} className='cursor-pointer' onClick={deletePostHandler} />}
             </div>
-            <hr/>
+            <hr />
             <p className='text-[28px] font-600'>{post.title}</p>
             <div ref={markdownRef} className={`h-full overflow-hidden ${styles.markdown}`}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
